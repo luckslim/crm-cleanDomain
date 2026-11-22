@@ -1,6 +1,7 @@
 import { left, right, type Either } from "@/core/either";
-import { adminRepository } from "../../repository/admin-repository";
+
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
+import type { adminRepository } from "../../../repository/admin-repository";
 
 interface DeleteAdminRequest {
   Id: string; //id from jwt

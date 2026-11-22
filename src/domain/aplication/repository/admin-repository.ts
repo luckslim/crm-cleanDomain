@@ -1,9 +1,9 @@
 import type { Admin } from "@/domain/enterprise/admin";
 
-export abstract class adminRepository {
-  abstract create(admin: Admin): Promise<Admin>;
-  abstract findByEmail(email: string): Promise<Admin | null>;
-  abstract findById(id: string): Promise<Admin | null>;
-  abstract save(admin: Admin): Promise<Admin>;
-  abstract delete(id: string): Promise<void>;
+export interface adminRepository {
+  create(admin: Admin): Promise<Admin>;
+  findByEmail(email: string): Promise<Admin | null>;
+  findById(id: string): Promise<Admin | null>;
+  save(admin: Admin): Promise<Admin>;
+  delete(id: string): Promise<void>;
 }

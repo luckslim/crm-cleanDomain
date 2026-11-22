@@ -1,8 +1,8 @@
 import { left, right, type Either } from "@/core/either";
-import { clientRepository } from "../../repository/client-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
 import type { adminRepository } from "../../repository/admin-repository";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
+import type { clientRepository } from "../../repository/client-repository";
 
 interface DeleteClientRequest {
   Id: string; //id from jwt

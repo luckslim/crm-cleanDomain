@@ -26,7 +26,7 @@ export class Time extends Entity<TimeProps> {
   set dateOfCreation(dateOfCreation: Date) {
     this.props.dateOfCreation = dateOfCreation;
   }
-  static create(props: Time, id?: UniqueEntityID) {
+  static create(props: TimeProps, id?: UniqueEntityID) {
     const time = new Time(props, id);
     return time;
   }

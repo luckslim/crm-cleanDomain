@@ -1,8 +1,8 @@
 import { left, right, type Either } from "@/core/either";
 import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { Admin } from "@/domain/enterprise/admin";
-import type { HashGenerator } from "../../cryptography/hash-generator";
-import type { adminRepository } from "../../repository/admin-repository";
+import type { HashGenerator } from "../../../cryptography/hash-generator";
+import type { adminRepository } from "../../../repository/admin-repository";
 
 interface CreateAdminRequest {
   email: string;

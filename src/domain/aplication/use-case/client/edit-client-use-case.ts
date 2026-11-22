@@ -10,13 +10,6 @@ interface EditClientRequest {
   adminId: string; //Id from jwt
   clientId: string;
   clientName: string;
-  email: string;
-  urlImage: string;
-  city: string;
-  cep: number;
-  street: string;
-  state: string;
-  number: number;
   cellphone: number;
 }
 
@@ -34,13 +27,6 @@ export class EditClientUseCase {
     adminId,
     clientId,
     clientName,
-    email,
-    urlImage,
-    city,
-    cep,
-    street,
-    state,
-    number,
     cellphone,
   }: EditClientRequest): Promise<EditClientResponse> {
     const admin = await this.adminRepository.findById(adminId);
@@ -60,13 +46,6 @@ export class EditClientUseCase {
     }
 
     client.clientName = clientName;
-    client.email = email;
-    client.urlImage = urlImage;
-    client.city = city;
-    client.cep = cep;
-    client.street = street;
-    client.state = state;
-    client.number = number;
     client.cellphone = cellphone;
 
     await this.clientRepository.save(client);

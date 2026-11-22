@@ -1,7 +1,7 @@
 import { left, right, type Either } from "@/core/either";
 import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
-import type { HashGenerator } from "../../cryptography/hash-generator";
-import type { adminRepository } from "../../repository/admin-repository";
+import type { HashGenerator } from "../../../cryptography/hash-generator";
+import type { adminRepository } from "../../../repository/admin-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
 
 interface EditAdminRequest {
@@ -11,7 +11,10 @@ interface EditAdminRequest {
   adminName: string;
 }
 
-type EditAdminResponse = Either<EmailAlreadyExistError | ResourceNotFoundError, { message: string }>;
+type EditAdminResponse = Either<
+  EmailAlreadyExistError | ResourceNotFoundError,
+  { message: string }
+>;
 export class EditAdminUseCase {
   constructor(
     public adminRepository: adminRepository,

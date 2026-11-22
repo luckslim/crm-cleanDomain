@@ -1,9 +1,14 @@
 import type { Client } from "@/domain/enterprise/client";
-
-export abstract class clientRepository {
-  abstract create(client: Client): Promise<Client>;
-  abstract findByEmail(email: string, adminId: string): Promise<Client | null>;
-  abstract findById(id: string): Promise<Client | null>;
-  abstract save(client: Client): Promise<Client>;
-  abstract delete(id: string): Promise<void>;
+export interface ClientParams {
+  Id: string;
+  clientName?: string;
+  cellphone?: number;
+}
+export interface clientRepository {
+  create(client: Client): Promise<Client>;
+  findByEmail(email: string, adminId: string): Promise<Client | null>;
+  findByParams(params: ClientParams): Promise<Client[] | null>;
+  findById(id: string): Promise<Client | null>;
+  save(client: Client): Promise<Client>;
+  delete(id: string): Promise<void>;
 }

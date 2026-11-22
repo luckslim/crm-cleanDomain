@@ -1,0 +1,4 @@
+-o sistema deve coletar dados dos contatos (nome-telefone) do whatsapp
+-deve salvar esses contatos no banco
+-deve existir grupos (type) para listar os clientes
+-deve existir etapas (stage) para cada grupo
