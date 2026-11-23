@@ -13,7 +13,7 @@ export class InMemoryStageRepository implements stageRepository {
     return this.items.find((stage) => stage.id.toString() === id) ?? null;
   }
 
-  async findByGroupId(id: string): Promise<Stage[] | null> {
+  async findManyByGroupId(id: string): Promise<Stage[] | null> {
     const stages = this.items.filter((stage) => stage.groupId === id);
     return stages.length > 0 ? stages : null;
   }

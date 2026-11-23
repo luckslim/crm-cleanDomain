@@ -22,7 +22,7 @@ export class GetStageUseCase {
       return left(new ResourceNotFoundError(Id));
     }
 
-    const stage = await this.stageRepository.findByGroupId(groupId);
+    const stage = await this.stageRepository.findManyByGroupId(groupId);
 
     if (!stage) {
       return left(new ResourceNotFoundError("etapas não encontradas"));
