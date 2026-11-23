@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import type { timeRepository } from "../../repository/time-repository";
 import type { adminRepository } from "../../repository/admin-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
@@ -9,7 +8,7 @@ interface GetTimeRequest {
   timeId: string;
 }
 
-type GetTimeResponse = Either<EmailAlreadyExistError, { message: string }>;
+type GetTimeResponse = Either<ResourceNotFoundError, { message: string }>;
 export class GetTimeUseCase {
   constructor(
     public timeRepository: timeRepository,

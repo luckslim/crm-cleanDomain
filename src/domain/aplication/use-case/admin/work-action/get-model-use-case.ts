@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { Model } from "@/domain/enterprise/model";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
 import type { modelRepository } from "@/domain/aplication/repository/model-repository";
@@ -10,7 +9,7 @@ interface GetModelRequest {
   modelId: string;
 }
 
-type GetModelResponse = Either<EmailAlreadyExistError, { model: Model }>;
+type GetModelResponse = Either<ResourceNotFoundError, { model: Model }>;
 export class GetModelUseCase {
   constructor(
     public modelRepository: modelRepository,

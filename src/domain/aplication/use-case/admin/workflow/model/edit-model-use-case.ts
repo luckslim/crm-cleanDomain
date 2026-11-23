@@ -10,7 +10,10 @@ interface EditModelRequest {
   company: string;
 }
 
-type EditModelResponse = Either<ResourceNotFoundError, { message: string }>;
+type EditModelResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { message: string }
+>;
 export class EditModelUseCase {
   constructor(
     public modelRepository: modelRepository,

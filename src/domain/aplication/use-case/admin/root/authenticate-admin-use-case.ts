@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import type { adminRepository } from "../../../repository/admin-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
 import type { Encrypter } from "../../../cryptography/encrypter";
@@ -12,7 +11,7 @@ interface GetAdminRequest {
 }
 
 type GetAdminResponse = Either<
-  EmailAlreadyExistError,
+  ResourceNotFoundError | WrongCredentialsError,
   { access_token: string }
 >;
 export class GetAdminUseCase {

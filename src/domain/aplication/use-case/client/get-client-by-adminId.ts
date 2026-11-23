@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { Client } from "@/domain/enterprise/client";
 import type { clientRepository } from "../../repository/client-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
@@ -11,7 +10,10 @@ interface GetClientRequest {
   clientId: string;
 }
 
-type GetClientResponse = Either<EmailAlreadyExistError, { client: Client }>;
+type GetClientResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { client: Client }
+>;
 export class GetClientUseCase {
   constructor(
     public clientRepository: clientRepository,

@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
 import type { adminRepository } from "@/domain/aplication/repository/admin-repository";
@@ -12,7 +11,7 @@ interface GetGroupRequest {
 }
 
 type GetGroupResponse = Either<
-  EmailAlreadyExistError | ResourceNotFoundError,
+  ResourceNotFoundError,
   { group: Group[] }
 >;
 export class GetGroupUseCase {

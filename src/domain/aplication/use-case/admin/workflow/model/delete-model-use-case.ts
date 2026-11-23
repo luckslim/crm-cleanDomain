@@ -9,7 +9,10 @@ interface DeleteModelRequest {
   modelId: string;
 }
 
-type DeleteModelResponse = Either<ResourceNotFoundError, { message: string }>;
+type DeleteModelResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { message: string }
+>;
 export class DeleteModelUseCase {
   constructor(
     public modelRepository: modelRepository,

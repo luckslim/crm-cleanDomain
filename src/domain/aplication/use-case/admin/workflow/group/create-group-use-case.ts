@@ -12,7 +12,10 @@ interface CreateGroupRequest {
   type: string;
 }
 
-type CreateGroupResponse = Either<ResourceNotFoundError, { message: string }>;
+type CreateGroupResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { message: string }
+>;
 export class CreateGroupUseCase {
   constructor(
     public modelRepository: modelRepository,

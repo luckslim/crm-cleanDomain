@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { Client } from "@/domain/enterprise/client";
 import type {
   ClientParams,
@@ -15,7 +14,7 @@ interface GetClientByParamsRequest {
 }
 
 type GetClientByParamsResponse = Either<
-  EmailAlreadyExistError,
+  ResourceNotFoundError,
   { clients: Client[] }
 >;
 export class GetClientUseCase {

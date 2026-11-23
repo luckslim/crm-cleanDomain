@@ -13,7 +13,10 @@ interface CreateStageRequest {
   name: string;
 }
 
-type CreateStageResponse = Either<ResourceNotFoundError, { message: string }>;
+type CreateStageResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { message: string }
+>;
 export class CreateStageUseCase {
   constructor(
     public modelRepository: modelRepository,

@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import { NotAllowedError } from "@/core/errors/not-allowed-error";
 
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
@@ -13,7 +12,7 @@ interface DeleteGroupRequest {
 }
 
 type DeleteGroupResponse = Either<
-  EmailAlreadyExistError | ResourceNotFoundError,
+  ResourceNotFoundError | NotAllowedError,
   { message: string }
 >;
 export class DeleteGroupUseCase {

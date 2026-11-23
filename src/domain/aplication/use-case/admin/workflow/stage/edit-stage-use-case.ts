@@ -12,7 +12,10 @@ interface EditStageRequest {
   name: string;
 }
 
-type EditStageResponse = Either<ResourceNotFoundError, { message: string }>;
+type EditStageResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { message: string }
+>;
 export class EditStageUseCase {
   constructor(
     public modelRepository: modelRepository,

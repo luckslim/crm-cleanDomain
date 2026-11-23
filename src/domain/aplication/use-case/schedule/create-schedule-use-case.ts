@@ -1,5 +1,4 @@
 import { left, right, type Either } from "@/core/either";
-import { EmailAlreadyExistError } from "@/core/errors/email-already-exist-error";
 import type { scheduleRepository } from "../../repository/schedule-repository";
 import type { adminRepository } from "../../repository/admin-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
@@ -17,7 +16,7 @@ interface CreateScheduleRequest {
 }
 
 type CreateScheduleResponse = Either<
-  EmailAlreadyExistError,
+  ResourceNotFoundError | NotAllowedError,
   { message: string }
 >;
 export class CreateScheduleUseCase {

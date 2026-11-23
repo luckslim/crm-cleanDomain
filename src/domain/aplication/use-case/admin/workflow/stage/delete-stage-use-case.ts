@@ -12,7 +12,10 @@ interface DeleteStageRequest {
   name: string;
 }
 
-type DeleteStageResponse = Either<ResourceNotFoundError, { message: string }>;
+type DeleteStageResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { message: string }
+>;
 export class DeleteStageUseCase {
   constructor(
     public modelRepository: modelRepository,
