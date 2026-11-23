@@ -6,7 +6,6 @@ export interface ClientParams {
 }
 export interface clientRepository {
   create(client: Client): Promise<Client>;
-  findByEmail(email: string, adminId: string): Promise<Client | null>;
   findByParams(params: ClientParams): Promise<Client[] | null>;
   findById(id: string): Promise<Client | null>;
   save(client: Client): Promise<Client>;
