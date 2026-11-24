@@ -11,6 +11,7 @@ interface CreateStageRequest {
   Id: string; //id from jwt
   groupId: string;
   name: string;
+  color?: string;
 }
 
 type CreateStageResponse = Either<
@@ -28,6 +29,7 @@ export class CreateStageUseCase {
     Id,
     groupId,
     name,
+    color,
   }: CreateStageRequest): Promise<CreateStageResponse> {
     const admin = await this.adminRepository.findById(Id);
 
@@ -54,6 +56,7 @@ export class CreateStageUseCase {
     const stage = Stage.create({
       groupId,
       name,
+      color: color ?? null,
       dateOfCreation: new Date(),
     });
 

@@ -7,8 +7,8 @@ export function MakeRecord(override: Partial<RecordProps>, id?: UniqueEntityID) 
     {
       adminId: faker.string.uuid(),
       clientId: faker.string.uuid(),
-      type: faker.word.noun(),
-      stage: null,
+      groupId: faker.string.uuid(),
+      stageId: null,
       interest: null,
       origin: faker.word.noun(),
       propertyOfInterest: faker.location.streetAddress(),
@@ -16,6 +16,7 @@ export function MakeRecord(override: Partial<RecordProps>, id?: UniqueEntityID) 
       nextContact: faker.date.future(),
       period: faker.word.noun(),
       tags: faker.lorem.words(),
+      color: null,
       notes: faker.lorem.sentence(),
       dateOfCreation: new Date(),
       ...override,

@@ -9,6 +9,7 @@ import type { modelRepository } from "@/domain/aplication/repository/model-repos
 interface EditGroupRequest {
   Id: string; //Id from jwt
   groupId: string;
+  color?: string;
   type: string;
 }
 
@@ -26,6 +27,7 @@ export class EditGroupUseCase {
     Id,
     groupId,
     type,
+    color,
   }: EditGroupRequest): Promise<EditGroupResponse> {
     const admin = await this.adminRepository.findById(Id);
 
@@ -50,6 +52,7 @@ export class EditGroupUseCase {
     }
 
     group.type = type;
+    group.color = color ?? null;
 
     await this.groupRepository.save(group);
 

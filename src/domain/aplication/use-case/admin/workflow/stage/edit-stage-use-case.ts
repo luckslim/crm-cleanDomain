@@ -10,6 +10,7 @@ interface EditStageRequest {
   Id: string; //id from jwt
   stageId: string;
   name: string;
+  color?: string;
 }
 
 type EditStageResponse = Either<
@@ -27,6 +28,7 @@ export class EditStageUseCase {
     Id,
     stageId,
     name,
+    color,
   }: EditStageRequest): Promise<EditStageResponse> {
     const admin = await this.adminRepository.findById(Id);
 
@@ -57,8 +59,10 @@ export class EditStageUseCase {
     }
 
     stage.name = name;
+    stage.color = color ?? null;
 
     await this.stageRepository.save(stage);
+
     return right({ message: "Etapa do Grupo foi editada com sucesso!" });
   }
 }

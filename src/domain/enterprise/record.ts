@@ -5,8 +5,8 @@ import type { UniqueEntityID } from "@/core/unique-entityId";
 export interface RecordProps {
   adminId: string;
   clientId: string;
-  type: string;
-  stage: string | null; //optional
+  groupId: string;
+  stageId: string | null; //optional
   interest: string | null; //optional
   origin: string;
   propertyOfInterest: string;
@@ -14,6 +14,7 @@ export interface RecordProps {
   nextContact: Date;
   period: string;
   tags: string;
+  color: string | null;
   notes: string;
   dateOfCreation: Date;
 }
@@ -24,11 +25,14 @@ export class Record extends Entity<RecordProps> {
   get clientId() {
     return this.props.clientId;
   }
-  get type() {
-    return this.props.type;
+  get groupId() {
+    return this.props.groupId;
   }
-  get stage() {
-    return this.props.stage;
+  get stageId() {
+    return this.props.stageId;
+  }
+  get color() {
+    return this.props.color;
   }
   get interest() {
     return this.props.interest;
@@ -61,14 +65,17 @@ export class Record extends Entity<RecordProps> {
   set adminId(adminId: string) {
     this.props.adminId = adminId;
   }
+  set color(color: string | null) {
+    this.props.color = color;
+  }
   set clientId(clientId: string) {
     this.props.clientId = clientId;
   }
-  set type(type: string) {
-    this.props.type = type;
+  set groupId(groupId: string) {
+    this.props.groupId = groupId;
   }
-  set stage(stage: string | null) {
-    this.props.stage = stage;
+  set stageId(stageId: string | null) {
+    this.props.stageId = stageId;
   }
   set interest(interest: string | null) {
     this.props.interest = interest;
@@ -99,14 +106,15 @@ export class Record extends Entity<RecordProps> {
   }
 
   static create(
-    props: Optional<RecordProps, "stage" | "interest">,
+    props: Optional<RecordProps, "stageId" | "interest">,
     id?: UniqueEntityID,
   ) {
     const record = new Record(
       {
         ...props,
-        stage: props.stage ?? null,
+        stageId: props.stageId ?? null,
         interest: props.interest ?? null,
+        color: props.color ?? null,
       },
       id,
     );

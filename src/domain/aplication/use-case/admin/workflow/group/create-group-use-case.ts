@@ -10,6 +10,7 @@ interface CreateGroupRequest {
   Id: string; //id from jwt
   modelId: string;
   type: string;
+  color?: string;
 }
 
 type CreateGroupResponse = Either<
@@ -26,6 +27,7 @@ export class CreateGroupUseCase {
     Id,
     modelId,
     type,
+    color,
   }: CreateGroupRequest): Promise<CreateGroupResponse> {
     const admin = await this.adminRepository.findById(Id);
 
@@ -46,6 +48,7 @@ export class CreateGroupUseCase {
     const group = Group.create({
       modelId,
       type,
+      color: color ?? null,
       dateOfCreation: new Date(),
     });
 
