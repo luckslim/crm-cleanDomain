@@ -8,6 +8,7 @@ import type { groupRepository } from "@/domain/aplication/repository/group-repos
 import type { stageRepository } from "@/domain/aplication/repository/stage-repository";
 import { Stage } from "@/domain/enterprise/stage";
 import { Group } from "@/domain/enterprise/group";
+import { NotAllowedError } from "@/core/errors/not-allowed-error";
 
 interface AggregateModelRequest {
   Id: string;
@@ -15,7 +16,10 @@ interface AggregateModelRequest {
   company?: string | null;
 }
 
-type AggregateModelResponse = Either<ResourceNotFoundError, { model: Model }>;
+type AggregateModelResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { model: Model }
+>;
 
 export class AggregateModelUseCase {
   constructor(
@@ -35,6 +39,12 @@ export class AggregateModelUseCase {
 
     if (!admin) {
       return left(new ResourceNotFoundError(Id));
+    }
+
+    const modelExisting = await this.modelRepository.findByAdminId(Id);
+
+    if (modelExisting) {
+      return left(new NotAllowedError("há um modelo em uso em seu perfil"));
     }
 
     // 2. Buscar modelo original

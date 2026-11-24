@@ -3,9 +3,10 @@ import { Model } from "@/domain/enterprise/model";
 import type { modelRepository } from "../../../../repository/model-repository";
 import type { adminRepository } from "../../../../repository/admin-repository";
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found";
+import { NotAllowedError } from "@/core/errors/not-allowed-error";
 
 interface CreateModelRequest {
-  adminId: string;
+  Id: string;
   company: string;
 }
 
@@ -16,17 +17,23 @@ export class CreateModelUseCase {
     public adminRepository: adminRepository,
   ) {}
   async execute({
-    adminId,
+    Id,
     company,
   }: CreateModelRequest): Promise<CreateModelResponse> {
-    const admin = await this.adminRepository.findById(adminId);
+    const admin = await this.adminRepository.findById(Id);
 
     if (!admin) {
-      return left(new ResourceNotFoundError(adminId));
+      return left(new ResourceNotFoundError(Id));
+    }
+
+    const modelExisting = await this.modelRepository.findByAdminId(Id);
+
+    if (modelExisting) {
+      return left(new NotAllowedError("há uma modelo em uso."));
     }
 
     const model = Model.create({
-      adminId,
+      adminId: Id,
       company,
       dateOfCreation: new Date(),
     });

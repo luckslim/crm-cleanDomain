@@ -8,6 +8,7 @@ import { InMemoryGroupRepository } from "../../../../../../test/in-memory-reposi
 import { InMemoryModelRepository } from "../../../../../../test/in-memory-repository/in-memory-model-repository";
 import { InMemoryStageRepository } from "../../../../../../test/in-memory-repository/in-memory-stage-repository";
 import { AggregateModelUseCase } from "./aggregate-use-case";
+import { NotAllowedError } from "@/core/errors/not-allowed-error";
 
 describe("Aggregate model", () => {
   let adminRepository: InMemoryAdminRepository;
@@ -31,7 +32,8 @@ describe("Aggregate model", () => {
 
   it("copies the model, its groups, and their stages", async () => {
     const admin = MakeAdmin({});
-    const model = MakeModel({ adminId: admin.id.toString() });
+    const sourceAdmin = MakeAdmin({});
+    const model = MakeModel({ adminId: sourceAdmin.id.toString() });
     const buyerGroup = MakeGroup({
       modelId: model.id.toString(),
       type: "Buyer",
@@ -48,6 +50,7 @@ describe("Aggregate model", () => {
       groupId: buyerGroup.id.toString(),
       name: "Negotiation",
     });
+    await adminRepository.create(sourceAdmin);
     await adminRepository.create(admin);
     await modelRepository.create(model);
     await groupRepository.create(buyerGroup);
@@ -96,11 +99,13 @@ describe("Aggregate model", () => {
 
   it("uses the source company when no replacement company is provided", async () => {
     const admin = MakeAdmin({});
+    const sourceAdmin = MakeAdmin({});
     const model = MakeModel({
-      adminId: admin.id.toString(),
+      adminId: sourceAdmin.id.toString(),
       company: "Original company",
     });
     const group = MakeGroup({ modelId: model.id.toString() });
+    await adminRepository.create(sourceAdmin);
     await adminRepository.create(admin);
     await modelRepository.create(model);
     await groupRepository.create(group);
@@ -116,7 +121,24 @@ describe("Aggregate model", () => {
       expect(result.value.model.company).toBe("copy-Original company");
     }
   });
+  
+  it("returns not allowed when the admin have a model", async () => {
+    const admin = MakeAdmin({});
 
+    await adminRepository.create(admin);
+
+    const model = MakeModel({ adminId: admin.id.toString() });
+
+    await modelRepository.create(model);
+
+    const result = await sut.execute({
+      Id: admin.id.toString(),
+      modelId: model.id.toString(),
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAllowedError);
+  });
   it("returns not found when the admin does not exist", async () => {
     const result = await sut.execute({
       Id: "missing-admin",
@@ -148,7 +170,9 @@ describe("Aggregate model", () => {
 
   it("returns not found when the source model has no groups", async () => {
     const admin = MakeAdmin({});
-    const model = MakeModel({ adminId: admin.id.toString() });
+    const sourceAdmin = MakeAdmin({});
+    const model = MakeModel({ adminId: sourceAdmin.id.toString() });
+    await adminRepository.create(sourceAdmin);
     await adminRepository.create(admin);
     await modelRepository.create(model);
 
