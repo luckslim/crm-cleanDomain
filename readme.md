@@ -8,7 +8,7 @@ O projeto concentra as regras de negócio de um CRM em **Clean Architecture**: a
 
 ## Progresso do projeto
 
-### [██████████████░░░░░░░░░░░░░░░] 45%
+### [██████████████░░░░░░░░░░░░░░] 50%
 
 | Etapa | Situação |
 |---|---|
